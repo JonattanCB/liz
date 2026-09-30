@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TQM Liz 🏎️💐 | Un Ramo Especial Para Ti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;400;600;800&family=Righteous&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Fondo dinámico de partículas / estrellas / corazones -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Luces de ambiente -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <main class="scene-container">
+    <!-- Encabezado principal -->
+    <header class="hero-header">
+      <div class="license-plate" id="plate-badge" title="Haz clic para sonar el claxon">
+        <span class="plate-Bolt left"></span>
+        <span class="plate-Bolt right"></span>
+        <div class="plate-top">EDICIÓN ESPECIAL ♥ SIEMPRE</div>
+        <div class="plate-number">TQM-LIZ</div>
+      </div>
+
+      <h1 class="main-title">
+        <span class="title-tqm">TQM</span>
+        <span class="title-liz">Liz</span>
+      </h1>
+      <p class="subtitle">Un ramo que nunca se marchita y acelera a mil por hora por ti 🏎️💐</p>
+    </header>
+
+    <!-- Barra de controles interactivos -->
+    <section class="controls-bar" aria-label="Controles del ramo">
+      <button class="btn-control" id="btn-lights" type="button">
+        <span class="btn-icon">💡</span>
+        <span class="btn-text">Encender Luces</span>
+      </button>
+      <button class="btn-control btn-turbo" id="btn-turbo" type="button">
+        <span class="btn-icon">🔥</span>
+        <span class="btn-text">Modo Turbo TQM</span>
+      </button>
+      <button class="btn-control" id="btn-card" type="button">
+        <span class="btn-icon">💌</span>
+        <span class="btn-text">Ver Dedicatoria</span>
+      </button>
+    </section>
+
+    <!-- Mensaje flotante al tocar un auto -->
+    <div class="car-speech-bubble" id="car-message" aria-live="polite">
+      <span class="bubble-tag" id="bubble-car-name">✨ Toca cualquier auto del ramo ✨</span>
+      <p class="bubble-text" id="bubble-car-quote">Cada auto guarda un mensajito especial para ti, Liz 💖</p>
+    </div>
+
+    <!-- EL RAMO DE AUTOS Y FLORES -->
+    <div class="bouquet-stage" id="bouquet-stage">
+      <div class="bouquet-wrapper" id="bouquet">
+
+        <!-- Capa trasera del papel envoltorio -->
+        <svg class="wrap-back-svg" viewBox="0 0 600 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="paperBackGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#2b192e" />
+              <stop offset="50%" stop-color="#1f1324" />
+              <stop offset="100%" stop-color="#140c18" />
+            </linearGradient>
+            <linearGradient id="tissueGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#fff0f6" stop-opacity="0.95" />
+              <stop offset="100%" stop-color="#ffd6e7" stop-opacity="0.75" />
+            </linearGradient>
+          </defs>
+
+          <!-- Puntas traseras del papel de lujo con borde rosa dorado -->
+          <path d="M300 600 L70 230 L175 115 L300 200 L425 115 L530 230 Z" fill="url(#paperBackGrad)" stroke="#ff85a2" stroke-width="3" stroke-opacity="0.6" />
+          <path d="M300 580 L40 310 L120 180 L300 280 L480 180 L560 310 Z" fill="#241529" stroke="#ffb8d1" stroke-width="2" stroke-opacity="0.4" />
+
+          <!-- Papel seda blanco/rosa interno -->
+          <path d="M300 540 L105 260 Q150 175 220 210 Q260 140 300 185 Q340 140 380 210 Q450 175 495 260 Z" fill="url(#tissueGrad)" />
+        </svg>
+
+        <!-- Ramitas de flores Gypsophila (Nube / Baby's Breath) y Rosas de acompañamiento -->
+        <div class="floral-accents">
+          <span class="sprig sprig-1">🌸</span>
+          <span class="sprig sprig-2">✨</span>
+          <span class="sprig sprig-3">🌷</span>
+          <span class="sprig sprig-4">🌸</span>
+          <span class="sprig sprig-5">🌹</span>
+          <span class="sprig sprig-6">🌷</span>
+          <span class="sprig sprig-7">🌸</span>
+          <span class="sprig sprig-8">✨</span>
+        </div>
+
+        <!-- Tallos y Flores-Auto (7 Autos de Colección en el Ramo) -->
+        <div class="stems-container">
+
+          <!-- AUTO 1: Porsche 911 GT3 RS Rosa Pastel (Izquierda Superior) -->
+          <div class="car-flower stem-pos-1" data-car="Porsche 911 GT3 RS Pink" data-quote="Liz, contigo cada día se siente como viajar en primera clase a máxima velocidad 💖">
+            <div class="stem-line">
+              <span class="leaf leaf-left"></span>
+              <span class="leaf leaf-right"></span>
+            </div>
+            <div class="blister-card">
+              <div class="blister-header">PORSCHE 911 ♥ LIZ</div>
+              <div class="car-body-wrap">
+                <div class="headlight-beam beam-left"></div>
+                <div class="headlight-beam beam-right"></div>
+                <div class="underglow glow-pink"></div>
+                <svg class="car-svg" viewBox="0 0 120 210" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="pinkCar" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#ff9ebb"/>
+                      <stop offset="50%" stop-color="#ff5c8a"/>
+                      <stop offset="100%" stop-color="#d81b60"/>
+                    </linearGradient>
+                  </defs>
+                  <!-- Ruedas -->
+                  <rect x="8" y="32" width="14" height="32" rx="5" fill="#1a1a24"/>
+                  <rect x="98" y="32" width="14" height="32" rx="5" fill="#1a1a24"/>
+                  <rect x="8" y="142" width="14" height="34" rx="5" fill="#1a1a24"/>
+                  <rect x="98" y="142" width="14" height="34" rx="5" fill="#1a1a24"/>
+                  <!-- Alerón GT3 -->
+                  <path d="M18 192 L102 192 L106 202 L14 202 Z" fill="#1e1e2a" stroke="#ff9ebb" stroke-width="1.5"/>
+                  <!-- Carrocería -->
+                  <path d="M24 22 C24 8, 96 8, 96 22 L104 65 C106 95, 106 135, 102 178 C100 192, 20 192, 18 178 C14 135, 14 95, 16 65 Z" fill="url(#pinkCar)" stroke="#fff0f5" stroke-width="2"/>
+                  <!-- Franjas de carrera -->
+                  <rect x="52" y="14" width="6" height="172" fill="#ffffff" opacity="0.7"/>
+                  <rect x="62" y="14" width="6" height="172" fill="#ffffff" opacity="0.7"/>
+                  <!-- Parabrisas y Cabina -->
+                  <path d="M28 72 Q60 60 92 72 L86 112 Q60 106 34 112 Z" fill="#1b263b" stroke="#ffd6e7" stroke-width="1.5"/>
+                  <path d="M34 115 L86 115 L82 145 Q60 152 38 145 Z" fill="#2b2d42"/>
+                  <!-- Corazón en el techo -->
+                  <path d="M60 124 C60 121, 55 118, 52 121 C49 124, 52 129, 60 135 C68 129, 71 124, 68 121 C65 118, 60 121, 60 124 Z" fill="#ffccd5"/>
+                  <!-- Faros delanteros -->
+                  <ellipse class="car-headlight" cx="32" cy="26" rx="7" ry="10" transform="rotate(-12 32 26)" fill="#fff9db" stroke="#ffffff" stroke-width="1.5"/>
+                  <ellipse class="car-headlight" cx="88" cy="26" rx="7" ry="10" transform="rotate(12 88 26)" fill="#fff9db" stroke="#ffffff" stroke-width="1.5"/>
+                  <!-- Luces traseras -->
+                  <rect class="car-taillight" x="24" y="182" width="22" height="5" rx="2" fill="#ff1744"/>
+                  <rect class="car-taillight" x="74" y="182" width="22" height="5" rx="2" fill="#ff1744"/>
+                </svg>
+              </div>
+              <span class="flower-petal-ring"></span>
+            </div>
+          </div>
+
+          <!-- AUTO 2: Ferrari F40 Rojo Pasión (Centro-Izquierda Superior) -->
+          <div class="car-flower stem-pos-2" data-car="Ferrari F40 Red" data-quote="Eres mi persona favorita en todo el circuito de la vida. ¡TQM muchísimo, Liz! 🏎️❤️">
+            <div class="stem-line">
+              <span class="leaf leaf-left"></span>
+              <span class="leaf leaf-right"></span>
+            </div>
+            <div class="blister-card">
+              <div class="blister-header">SCUDERIA ♥ TQM</div>
+              <div class="car-body-wrap">
+                <div class="headlight-beam beam-left"></div>
+                <div class="headlight-beam beam-right"></div>
+                <div class="underglow glow-red"></div>
+                <svg class="car-svg" viewBox="0 0 120 210" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="redCar" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#ff4d4d"/>
+                      <stop offset="55%" stop-color="#e60026"/>
+                      <stop offset="100%" stop-color="#990012"/>
+                    </linearGradient>
+                  </defs>
+                  <!-- Ruedas -->
+                  <rect x="8" y="34" width="14" height="32" rx="4" fill="#1a1a24"/>
+                  <rect x="98" y="34" width="14" height="32" rx="4" fill="#1a1a24"/>
+                  <rect x="8" y="142" width="14" height="34" rx="4" fill="#1a1a24"/>
+                  <rect x="98" y="142" width="14" height="34" rx="4" fill="#1a1a24"/>
+                  <!-- Carrocería F40 angular -->
+                  <path d="M20 18 L100 18 L105 68 L105 186 L15 186 L15 68 Z" rx="12" fill="url(#redCar)" stroke="#ffccd5" stroke-width="2"/>
+                  <!-- Tomas NACA en el cofre -->
+                  <polygon points="36,42 44,54 32,54" fill="#1b1b24"/>
+                  <polygon points="84,42 88,54 76,54" fill="#1b1b24"/>
+                  <!-- Cabina -->
+                  <path d="M26 72 Q60 62 94 72 L88 114 Q60 108 32 114 Z" fill="#141e30" stroke="#ff99ac" stroke-width="1.5"/>
+                  <!-- Motor trasero visible con rejillas -->
+                  <rect x="35" y="120" width="50" height="44" rx="4" fill="#1f242d" stroke="#ff4d4d" stroke-width="1"/>
+                  <line x1="40" y1="130" x2="80" y2="130" stroke="#596579" stroke-width="2"/>
+                  <line x1="40" y1="140" x2="80" y2="140" stroke="#596579" stroke-width="2"/>
+                  <line x1="40" y1="150" x2="80" y2="150" stroke="#596579" stroke-width="2"/>
+                  <!-- Alerón clásico cuadrado -->
+                  <rect x="16" y="174" width="88" height="10" rx="2" fill="#b3001b" stroke="#ffffff" stroke-width="1"/>
+                  <!-- Faros -->
+                  <rect class="car-headlight" x="24" y="20" width="16" height="9" rx="2" fill="#fff3b0"/>
+                  <rect class="car-headlight" x="80" y="20" width="16" height="9" rx="2" fill="#fff3b0"/>
+                </svg>
+              </div>
+              <span class="flower-petal-ring"></span>
+            </div>
+          </div>
+
+          <!-- AUTO 3: Lamborghini Aventador Dorado/Sol (Centro Rey del Ramo) -->
+          <div class="car-flower stem-pos-3 featured-car" data-car="Lamborghini Aventador Gold" data-quote="Brillas más que cualquier superdeportivo en el mundo. ¡Gracias por existir, Liz! ✨💛">
+            <div class="stem-line">
+              <span class="leaf leaf-left"></span>
+              <span class="leaf leaf-right"></span>
+            </div>
+            <div class="blister-card blister-gold">
+              <div class="blister-header">★ EDICIÓN #1 LIZ ★</div>
+              <div class="car-body-wrap">
+                <div class="headlight-beam beam-left"></div>
+                <div class="headlight-beam beam-right"></div>
+                <div class="underglow glow-gold"></div>
+                <svg class="car-svg" viewBox="0 0 120 210" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="goldCar" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#fff3b0"/>
+                      <stop offset="45%" stop-color="#ffbe0b"/>
+                      <stop offset="100%" stop-color="#fb5607"/>
+                    </linearGradient>
+                  </defs>
+                  <!-- Ruedas -->
+                  <rect x="7" y="34" width="14" height="32" rx="4" fill="#1a1a24"/>
+                  <rect x="99" y="34" width="14" height="32" rx="4" fill="#1a1a24"/>
+                  <rect x="7" y="140" width="14" height="34" rx="4" fill="#1a1a24"/>
+                  <rect x="99" y="140" width="14" height="34" rx="4" fill="#1a1a24"/>
+                  <!-- Cuerpo hexagonal estilo Lambo -->
+                  <polygon points="60,10 98,24 106,70 104,178 86,196 34,196 16,178 14,70 22,24" fill="url(#goldCar)" stroke="#ffffff" stroke-width="2"/>
+                  <!-- Líneas aerodinámicas del cofre -->
+                  <line x1="60" y1="12" x2="42" y2="62" stroke="#ffffff" stroke-width="1.5" opacity="0.7"/>
+                  <line x1="60" y1="12" x2="78" y2="62" stroke="#ffffff" stroke-width="1.5" opacity="0.7"/>
+                  <!-- Parabrisas hexagonal -->
+                  <polygon points="60,58 92,72 84,116 36,116 28,72" fill="#111827" stroke="#fde68a" stroke-width="1.5"/>
+                  <!-- Texto TQM en el techo -->
+                  <text x="60" y="138" text-anchor="middle" fill="#111827" font-family="Righteous, sans-serif" font-size="14" font-weight="bold">LIZ ♥</text>
+                  <!-- Cubierta motor en V -->
+                  <polygon points="40,145 80,145 70,182 50,182" fill="#1f2937"/>
+                  <!-- Faros en Y -->
+                  <path class="car-headlight" d="M24 32 L34 24 L30 38 Z" fill="#ffffff"/>
+                  <path class="car-headlight" d="M96 32 L86 24 L90 38 Z" fill="#ffffff"/>
+                </svg>
+              </div>
+              <span class="flower-petal-ring"></span>
+            </div>
+          </div>
+
+          <!-- AUTO 4: Nissan Skyline GT-R R34 Azul Cielo (Centro-Derecha Superior) -->
+          <div class="car-flower stem-pos-4" data-car="Nissan Skyline GT-R R34" data-quote="Ni con todo el nitro del mundo alcanzaría a medir todo lo que te quiero, Liz 💙⚡">
+            <div class="stem-line">
+              <span class="leaf leaf-left"></span>
+              <span class="leaf leaf-right"></span>
+            </div>
+            <div class="blister-card">
+              <div class="blister-header">SKYLINE ♥ R34</div>
+              <div class="car-body-wrap">
+                <div class="headlight-beam beam-left"></div>
+                <div class="headlight-beam beam-right"></div>
+                <div class="underglow glow-blue"></div>
+                <svg class="car-svg" viewBox="0 0 120 210" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="blueCar" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#72efdd"/>
+                      <stop offset="50%" stop-color="#00b4d8"/>
+                      <stop offset="100%" stop-color="#03045e"/>
+                    </linearGradient>
+                  </defs>
+                  <!-- Ruedas -->
+                  <rect x="8" y="34" width="14" height="32" rx="4" fill="#1a1a24"/>
+                  <rect x="98" y="34" width="14" height="32" rx="4" fill="#1a1a24"/>
+                  <rect x="8" y="142" width="14" height="34" rx="4" fill="#1a1a24"/>
+                  <rect x="98" y="142" width="14" height="34" rx="4" fill="#1a1a24"/>
+                  <!-- Carrocería GT-R -->
+                  <rect x="18" y="16" width="84" height="174" rx="16" fill="url(#blueCar)" stroke="#caf0f8" stroke-width="2"/>
+                  <!-- Franjas plateadas -->
+                  <rect x="46" y="16" width="8" height="174" fill="#e0fbfc" opacity="0.8"/>
+                  <rect x="66" y="16" width="8" height="174" fill="#e0fbfc" opacity="0.8"/>
+                  <!-- Parabrisas -->
+                  <path d="M26 70 Q60 62 94 70 L88 112 Q60 108 32 112 Z" fill="#0f172a" stroke="#90e0ef" stroke-width="1.5"/>
+                  <rect x="32" y="140" width="56" height="22" rx="4" fill="#0f172a"/>
+                  <!-- Alerón trasero -->
+                  <rect x="20" y="176" width="80" height="9" rx="3" fill="#023e8a" stroke="#caf0f8" stroke-width="1.2"/>
+                  <!-- Faros -->
+                  <rect class="car-headlight" x="24" y="19" width="18" height="8" rx="3" fill="#e0fbfc"/>
+                  <rect class="car-headlight" x="78" y="19" width="18" height="8" rx="3" fill="#e0fbfc"/>
+                  <!-- Doble calavera redonda icónica -->
+                  <circle class="car-taillight" cx="32" cy="187" r="4" fill="#ff1744"/>
+                  <circle class="car-taillight" cx="42" cy="187" r="3.5" fill="#ff1744"/>
+                  <circle class="car-taillight" cx="78" cy="187" r="3.5" fill="#ff1744"/>
+                  <circle class="car-taillight" cx="88" cy="187" r="4" fill="#ff1744"/>
+                </svg>
+              </div>
+              <span class="flower-petal-ring"></span>
+            </div>
+          </div>
+
+          <!-- AUTO 5: McLaren 720S Violeta Galaxia (Derecha Superior) -->
+          <div class="car-flower stem-pos-5" data-car="McLaren 720S Violet" data-quote="TQM Liz: eres tan única, increíble y especial como un superauto de edición limitada 💜🌸">
+            <div class="stem-line">
+              <span class="leaf leaf-left"></span>
+              <span class="leaf leaf-right"></span>
+            </div>
+            <div class="blister-card">
+              <div class="blister-header">McLAREN ♥ LIZ</div>
+              <div class="car-body-wrap">
+                <div class="headlight-beam beam-left"></div>
+                <div class="headlight-beam beam-right"></div>
+                <div class="underglow glow-purple"></div>
+                <svg class="car-svg" viewBox="0 0 120 210" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="purpleCar" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#e0aaff"/>
+                      <stop offset="50%" stop-color="#9d4edd"/>
+                      <stop offset="100%" stop-color="#5a189a"/>
+                    </linearGradient>
+                  </defs>
+                  <!-- Ruedas -->
+                  <rect x="8" y="34" width="14" height="32" rx="5" fill="#1a1a24"/>
+                  <rect x="98" y="34" width="14" height="32" rx="5" fill="#1a1a24"/>
+                  <rect x="8" y="142" width="14" height="34" rx="5" fill="#1a1a24"/>
+                  <rect x="98" y="142" width="14" height="34" rx="5" fill="#1a1a24"/>
+                  <!-- Carrocería orgánica McLaren -->
+                  <path d="M28 18 Q60 8 92 18 C108 45, 102 85, 104 170 Q60 198 16 170 C18 85, 12 45, 28 18 Z" fill="url(#purpleCar)" stroke="#f3d5ff" stroke-width="2"/>
+                  <!-- Cabina tipo gota -->
+                  <ellipse cx="60" cy="105" rx="28" ry="42" fill="#191229" stroke="#e0aaff" stroke-width="1.5"/>
+                  <!-- Estrella en el cofre -->
+                  <polygon points="60,34 63,42 72,42 65,47 67,55 60,50 53,55 55,47 48,42 57,42" fill="#fff3b0"/>
+                  <!-- Faros -->
+                  <ellipse class="car-headlight" cx="31" cy="26" rx="8" ry="5" transform="rotate(-20 31 26)" fill="#ffffff"/>
+                  <ellipse class="car-headlight" cx="89" cy="26" rx="8" ry="5" transform="rotate(20 89 26)" fill="#ffffff"/>
+                </svg>
+              </div>
+              <span class="flower-petal-ring"></span>
+            </div>
+          </div>
+
+          <!-- AUTO 6: Mazda MX-5 Miata Rosa Coral (Fila Frontal Izquierda) -->
+          <div class="car-flower stem-pos-6" data-car="Mazda Miata MX-5" data-quote="Siempre que sonríes me encandilas más que las luces altas. ¡TQM Liz! 🥰🌺">
+            <div class="stem-line">
+              <span class="leaf leaf-left"></span>
+            </div>
+            <div class="blister-card">
+              <div class="blister-header">MIATA ♥ WINK</div>
+              <div class="car-body-wrap">
+                <div class="headlight-beam beam-left"></div>
+                <div class="headlight-beam beam-right"></div>
+                <div class="underglow glow-pink"></div>
+                <svg class="car-svg" viewBox="0 0 120 210" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="coralCar" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#ffb5a7"/>
+                      <stop offset="50%" stop-color="#ff758f"/>
+                      <stop offset="100%" stop-color="#c9184a"/>
+                    </linearGradient>
+                  </defs>
+                  <rect x="10" y="34" width="13" height="30" rx="5" fill="#1a1a24"/>
+                  <rect x="97" y="34" width="13" height="30" rx="5" fill="#1a1a24"/>
+                  <rect x="10" y="138" width="13" height="32" rx="5" fill="#1a1a24"/>
+                  <rect x="97" y="138" width="13" height="32" rx="5" fill="#1a1a24"/>
+                  <rect x="20" y="16" width="80" height="168" rx="34" fill="url(#coralCar)" stroke="#ffe5ec" stroke-width="2"/>
+                  <!-- Faros Pop-Up adorables -->
+                  <rect class="car-headlight" x="28" y="22" width="16" height="12" rx="3" fill="#fff9db" stroke="#1a1a24" stroke-width="1.5"/>
+                  <rect class="car-headlight" x="76" y="22" width="16" height="12" rx="3" fill="#fff9db" stroke="#1a1a24" stroke-width="1.5"/>
+                  <!-- Sonrisa en el parachoques -->
+                  <path d="M46 19 Q60 25 74 19" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                  <!-- Cabina convertible abierta -->
+                  <rect x="28" y="72" width="64" height="62" rx="14" fill="#2b1e28" stroke="#ffb3c6" stroke-width="1.5"/>
+                  <!-- Asientos -->
+                  <rect x="34" y="96" width="20" height="26" rx="5" fill="#ffccd5"/>
+                  <rect x="66" y="96" width="20" height="26" rx="5" fill="#ffccd5"/>
+                </svg>
+              </div>
+              <span class="flower-petal-ring"></span>
+            </div>
+          </div>
+
+          <!-- AUTO 7: Corvette C8 Mint / Turquesa Pastel (Fila Frontal Derecha) -->
+          <div class="car-flower stem-pos-7" data-car="Corvette Stingray Mint" data-quote="Para Liz: porque las flores normales duran unos días, pero este ramo de autos es eterno 💐🏁">
+            <div class="stem-line">
+              <span class="leaf leaf-right"></span>
+            </div>
+            <div class="blister-card">
+              <div class="blister-header">STINGRAY ♥ TQM</div>
+              <div class="car-body-wrap">
+                <div class="headlight-beam beam-left"></div>
+                <div class="headlight-beam beam-right"></div>
+                <div class="underglow glow-mint"></div>
+                <svg class="car-svg" viewBox="0 0 120 210" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="mintCar" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#b7efc5"/>
+                      <stop offset="50%" stop-color="#2ec4b6"/>
+                      <stop offset="100%" stop-color="#0f766e"/>
+                    </linearGradient>
+                  </defs>
+                  <rect x="9" y="34" width="13" height="30" rx="5" fill="#1a1a24"/>
+                  <rect x="98" y="34" width="13" height="30" rx="5" fill="#1a1a24"/>
+                  <rect x="9" y="140" width="13" height="32" rx="5" fill="#1a1a24"/>
+                  <rect x="98" y="140" width="13" height="32" rx="5" fill="#1a1a24"/>
+                  <polygon points="60,12 96,26 104,70 100,180 60,192 20,180 16,70 24,26" fill="url(#mintCar)" stroke="#d8f3dc" stroke-width="2"/>
+                  <polygon points="60,60 90,74 82,118 38,118 30,74" fill="#132a2e" stroke="#a8f0e2" stroke-width="1.5"/>
+                  <!-- Corazón blanco -->
+                  <path d="M60 132 C60 129, 55 126, 52 129 C49 132, 52 137, 60 143 C68 137, 71 132, 68 129 C65 126, 60 129, 60 132 Z" fill="#ffffff"/>
+                  <ellipse class="car-headlight" cx="30" cy="28" rx="6" ry="9" transform="rotate(-15 30 28)" fill="#ffffff"/>
+                  <ellipse class="car-headlight" cx="90" cy="28" rx="6" ry="9" transform="rotate(15 90 28)" fill="#ffffff"/>
+                </svg>
+              </div>
+              <span class="flower-petal-ring"></span>
+            </div>
+          </div>
+
+        </div><!-- /stems-container -->
+
+        <!-- Rosas decorativas en la base de los autos -->
+        <div class="bouquet-roses-mid">
+          <div class="rose-bud rose-1">🌹</div>
+          <div class="rose-bud rose-2">🌸</div>
+          <div class="rose-bud rose-3">🌹</div>
+          <div class="rose-bud rose-4">🌺</div>
+          <div class="rose-bud rose-5">🌹</div>
+        </div>
+
+        <!-- Capa frontal del cono envoltorio del ramo + Moño y Etiqueta -->
+        <div class="wrap-front-container">
+          <svg class="wrap-front-svg" viewBox="0 0 600 450" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="coneLeftGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#ff758f" />
+                <stop offset="45%" stop-color="#ff4d6d" />
+                <stop offset="100%" stop-color="#a4133c" />
+              </linearGradient>
+              <linearGradient id="coneRightGrad" x1="1" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ff8fa3" />
+                <stop offset="50%" stop-color="#c9184a" />
+                <stop offset="100%" stop-color="#800f2f" />
+              </linearGradient>
+              <linearGradient id="coneBottomGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#590d22" />
+                <stop offset="100%" stop-color="#2b0610" />
+              </linearGradient>
+              <linearGradient id="goldTrim" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#ffe599" />
+                <stop offset="50%" stop-color="#ffd166" />
+                <stop offset="100%" stop-color="#f4a261" />
+              </linearGradient>
+            </defs>
+
+            <!-- Pliegue izquierdo del ramo -->
+            <path d="M95 35 L315 180 L285 385 L215 360 Z" fill="url(#coneLeftGrad)" stroke="url(#goldTrim)" stroke-width="3" />
+            <!-- Pliegue derecho del ramo cruzado -->
+            <path d="M505 35 L270 190 L315 385 L385 360 Z" fill="url(#coneRightGrad)" stroke="url(#goldTrim)" stroke-width="3" />
+            <!-- Base inferior del ramo -->
+            <path d="M245 315 L355 315 L335 435 Q300 448 265 435 Z" fill="url(#coneBottomGrad)" stroke="url(#goldTrim)" stroke-width="2.5" />
+
+            <!-- Listón / Moño Satinado Dorado y Blanco -->
+            <!-- Cintas colgantes -->
+            <path d="M290 270 Q265 345 235 405 L260 412 Q285 350 302 275 Z" fill="url(#goldTrim)" />
+            <path d="M310 270 Q335 345 365 405 L340 412 Q315 350 298 275 Z" fill="url(#goldTrim)" />
+            <!-- Lazo izquierdo -->
+            <path d="M300 265 C235 215, 195 275, 255 295 C275 300, 290 280, 300 265 Z" fill="url(#goldTrim)" stroke="#fff3b0" stroke-width="2" />
+            <!-- Lazo derecho -->
+            <path d="M300 265 C365 215, 405 275, 345 295 C325 300, 310 280, 300 265 Z" fill="url(#goldTrim)" stroke="#fff3b0" stroke-width="2" />
+            <!-- Nudo central del moño -->
+            <rect x="284" y="248" width="32" height="32" rx="10" fill="#ffd166" stroke="#ffffff" stroke-width="2" />
+          </svg>
+
+          <!-- Etiqueta colgante del ramo interactiva -->
+          <button class="bouquet-tag" id="bouquet-tag-btn" type="button" title="Haz clic para abrir la tarjeta">
+            <span class="tag-hole"></span>
+            <span class="tag-small">PARA:</span>
+            <span class="tag-Big">LIZ 💖</span>
+            <span class="tag-tqm">TQM</span>
+          </button>
+        </div>
+
+      </div><!-- /bouquet-wrapper -->
+    </div><!-- /bouquet-stage -->
+
+    <!-- Velocímetro de Cariño (RPM) -->
+    <footer class="rpm-footer">
+      <div class="speedometer-card">
+        <div class="speedo-label">NIVEL DE CARIÑO POR LIZ:</div>
+        <div class="speedo-bar-track">
+          <div class="speedo-bar-fill" id="speedo-fill"></div>
+        </div>
+        <div class="speedo-value" id="speedo-text">9,999 RPM — ¡AL LÍMITE! ❤️‍🔥</div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Modal de Tarjeta de Dedicatoria -->
+  <div class="modal-backdrop" id="card-modal" aria-hidden="true">
+    <div class="love-card" role="dialog" aria-labelledby="modal-title">
+      <button class="modal-close" id="close-modal" aria-label="Cerrar tarjeta">&times;</button>
+      <div class="card-badge">🏎️💐 EDICIÓN COLECCIONISTA</div>
+      <h2 class="card-title" id="modal-title">¡TQM Muchísimo, Liz!</h2>
+      <p class="card-body">
+        Cualquiera puede regalar un ramo de flores normales, pero tú te mereces un
+        <strong>ramo de autos</strong> tan único, increíble y especial como tú.
+      </p>
+      <p class="card-body">
+        Cada uno de estos autos representa un deseo de que todos tus caminos estén llenos de alegría, metas cumplidas y momentos inolvidables.
+      </p>
+      <div class="card-signature">Con mucho cariño para ti, Liz 💖🏁</div>
+      <button class="btn-control btn-turbo modal-action-btn" id="btn-celebrate" type="button">
+        🎉 ¡Lanzar Lluvia de Corazones y Autos!
+      </button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

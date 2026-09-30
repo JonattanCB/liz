@@ -1,0 +1,926 @@
+:root {
+  --bg-dark: #0f0714;
+  --bg-deep: #1a0b24;
+  --pink-neon: #ff4d8d;
+  --pink-soft: #ff9ebb;
+  --gold-bright: #ffd166;
+  --cyan-glow: #00f5d4;
+  --text-light: #fff0f6;
+  --card-glass: rgba(35, 16, 48, 0.78);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at 50% 25%, #2e113d 0%, var(--bg-deep) 50%, var(--bg-dark) 100%);
+  color: var(--text-light);
+  font-family: 'Outfit', sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background 0.6s ease;
+}
+
+body.lights-on {
+  background: radial-gradient(circle at 50% 30%, #170926 0%, #090310 65%, #030106 100%);
+}
+
+/* Canvas de partículas */
+#particles-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Luces de ambiente */
+.ambient-glow {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.45;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.glow-1 {
+  width: 380px;
+  height: 380px;
+  background: #ff2a85;
+  top: -80px;
+  left: 10%;
+}
+
+.glow-2 {
+  width: 420px;
+  height: 420px;
+  background: #7209b7;
+  bottom: -100px;
+  right: 8%;
+}
+
+.glow-3 {
+  width: 300px;
+  height: 300px;
+  background: #ffb703;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.2;
+}
+
+body.lights-on .glow-3 {
+  opacity: 0.45;
+  background: #00f5d4;
+}
+
+/* Contenedor Principal */
+.scene-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 980px;
+  padding: 1.5rem 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Placa de auto personalizada TQM-LIZ */
+.hero-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 1rem;
+}
+
+.license-plate {
+  position: relative;
+  background: linear-gradient(135deg, #1e1b2e 0%, #0d0b14 100%);
+  border: 3px solid var(--gold-bright);
+  border-radius: 10px;
+  padding: 0.35rem 1.4rem;
+  box-shadow: 0 6px 20px rgba(255, 77, 141, 0.35), inset 0 0 12px rgba(255, 209, 102, 0.25);
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+}
+
+.license-plate:hover {
+  transform: scale(1.06) rotate(-2deg);
+  box-shadow: 0 8px 28px rgba(255, 209, 102, 0.55);
+}
+
+.plate-Bolt {
+  position: absolute;
+  top: 6px;
+  width: 6px;
+  height: 6px;
+  background: var(--gold-bright);
+  border-radius: 50%;
+}
+.plate-Bolt.left { left: 8px; }
+.plate-Bolt.right { right: 8px; }
+
+.plate-top {
+  font-size: 0.62rem;
+  letter-spacing: 2px;
+  color: var(--pink-soft);
+  font-weight: 700;
+}
+
+.plate-number {
+  font-family: 'Righteous', cursive;
+  font-size: 1.35rem;
+  letter-spacing: 4px;
+  color: var(--gold-bright);
+  text-shadow: 0 0 10px rgba(255, 209, 102, 0.6);
+}
+
+/* Título Principal TQM Liz */
+.main-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  line-height: 1.05;
+  margin-top: 0.2rem;
+}
+
+.title-tqm {
+  font-family: 'Righteous', sans-serif;
+  font-size: clamp(2.8rem, 7vw, 4.5rem);
+  letter-spacing: 3px;
+  background: linear-gradient(180deg, #ffffff 0%, #ff9ebb 45%, #ff2a85 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 18px rgba(255, 42, 133, 0.55));
+}
+
+.title-liz {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(3.4rem, 8.5vw, 5.4rem);
+  color: var(--gold-bright);
+  text-shadow:
+    0 0 15px rgba(255, 209, 102, 0.75),
+    0 0 35px rgba(255, 77, 141, 0.65);
+  animation: pulseGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+  0% {
+    transform: scale(1) rotate(-2deg);
+    text-shadow: 0 0 15px rgba(255, 209, 102, 0.7), 0 0 30px rgba(255, 77, 141, 0.5);
+  }
+  100% {
+    transform: scale(1.05) rotate(2deg);
+    text-shadow: 0 0 25px rgba(255, 209, 102, 1), 0 0 48px rgba(255, 77, 141, 0.95);
+  }
+}
+
+.subtitle {
+  font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+  color: #f8c8dc;
+  max-width: 540px;
+  font-weight: 300;
+}
+
+/* Barra de botones */
+.controls-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin: 0.65rem 0 1rem;
+}
+
+.btn-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.2rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 158, 187, 0.45);
+  background: rgba(43, 19, 56, 0.75);
+  backdrop-filter: blur(10px);
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-control:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold-bright);
+  box-shadow: 0 8px 22px rgba(255, 77, 141, 0.45);
+}
+
+.btn-control.active {
+  background: linear-gradient(135deg, #00b4d8, #7209b7);
+  border-color: #90e0ef;
+  box-shadow: 0 0 20px rgba(0, 180, 216, 0.6);
+}
+
+.btn-turbo {
+  background: linear-gradient(135deg, #ff2a85 0%, #ff7b00 100%);
+  border-color: #ffd166;
+  box-shadow: 0 6px 20px rgba(255, 42, 133, 0.5);
+}
+
+.btn-turbo:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 10px 28px rgba(255, 123, 0, 0.7);
+}
+
+/* Globo de mensaje de cada auto */
+.car-speech-bubble {
+  background: var(--card-glass);
+  border: 1.5px solid rgba(255, 209, 102, 0.5);
+  backdrop-filter: blur(12px);
+  padding: 0.75rem 1.4rem;
+  border-radius: 18px;
+  text-align: center;
+  max-width: 580px;
+  width: 92%;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease;
+}
+
+.car-speech-bubble.pop {
+  transform: scale(1.04);
+  border-color: #ff4d8d;
+}
+
+.bubble-tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gold-bright);
+  margin-bottom: 0.2rem;
+}
+
+.bubble-text {
+  font-size: 1rem;
+  color: #fff0f6;
+  line-height: 1.4;
+}
+
+/* ==========================================
+   ESCENARIO DEL RAMO DE AUTOS
+   ========================================== */
+.bouquet-stage {
+  position: relative;
+  width: 100%;
+  max-width: 650px;
+  height: 670px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.bouquet-wrapper {
+  position: relative;
+  width: 600px;
+  height: 660px;
+  transform-origin: bottom center;
+  animation: bouquetSway 6s ease-in-out infinite alternate;
+}
+
+@keyframes bouquetSway {
+  0% { transform: rotate(-1.2deg); }
+  100% { transform: rotate(1.2deg); }
+}
+
+.bouquet-wrapper.turbo-shake {
+  animation: turboVibrate 0.14s infinite alternate;
+}
+
+@keyframes turboVibrate {
+  0% { transform: translate(-2px, -2px) rotate(-1deg) scale(1.02); }
+  100% { transform: translate(2px, 2px) rotate(1deg) scale(1.02); }
+}
+
+/* SVG Envoltorio Trasero */
+.wrap-back-svg {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  filter: drop-shadow(0 18px 35px rgba(0, 0, 0, 0.6));
+}
+
+/* Flores de relleno / Nube / Rosas en el ramo */
+.floral-accents {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.sprig {
+  position: absolute;
+  font-size: 1.6rem;
+  filter: drop-shadow(0 2px 8px rgba(255, 105, 180, 0.5));
+  animation: floatSprig 3.5s ease-in-out infinite alternate;
+}
+
+.sprig-1 { top: 85px; left: 165px; animation-delay: 0s; }
+.sprig-2 { top: 55px; left: 245px; animation-delay: 0.5s; }
+.sprig-3 { top: 60px; right: 235px; animation-delay: 1.1s; }
+.sprig-4 { top: 90px; right: 160px; animation-delay: 0.3s; }
+.sprig-5 { top: 190px; left: 95px; animation-delay: 0.8s; }
+.sprig-6 { top: 195px; right: 95px; animation-delay: 1.4s; }
+.sprig-7 { top: 155px; left: 225px; animation-delay: 0.7s; }
+.sprig-8 { top: 155px; right: 225px; animation-delay: 1.6s; }
+
+@keyframes floatSprig {
+  0% { transform: translateY(0) scale(0.95); }
+  100% { transform: translateY(-7px) scale(1.08); }
+}
+
+/* Contenedor de Tallos y Autos */
+.stems-container {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+
+/* Cada "Flor-Auto" */
+.car-flower {
+  position: absolute;
+  bottom: 215px;
+  left: 50%;
+  width: 112px;
+  height: 360px;
+  margin-left: -56px;
+  transform-origin: bottom center;
+  cursor: pointer;
+  transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), z-index 0s;
+}
+
+/* Posiciones en abanico tipo ramo floral */
+.stem-pos-1 {
+  transform: translate(-155px, -10px) rotate(-28deg);
+  z-index: 3;
+}
+.stem-pos-2 {
+  transform: translate(-80px, -45px) rotate(-14deg);
+  z-index: 4;
+}
+.stem-pos-3 {
+  transform: translate(0px, -65px) rotate(0deg) scale(1.08);
+  z-index: 6;
+}
+.stem-pos-4 {
+  transform: translate(80px, -45px) rotate(14deg);
+  z-index: 4;
+}
+.stem-pos-5 {
+  transform: translate(155px, -10px) rotate(28deg);
+  z-index: 3;
+}
+.stem-pos-6 {
+  transform: translate(-88px, 50px) rotate(-18deg) scale(0.96);
+  z-index: 7;
+}
+.stem-pos-7 {
+  transform: translate(88px, 50px) rotate(18deg) scale(0.96);
+  z-index: 7;
+}
+
+/* Hover y Selección de cada Auto en el ramo */
+.stem-pos-1:hover, .stem-pos-1.selected {
+  transform: translate(-162px, -28px) rotate(-24deg) scale(1.12);
+  z-index: 15;
+}
+.stem-pos-2:hover, .stem-pos-2.selected {
+  transform: translate(-82px, -65px) rotate(-10deg) scale(1.12);
+  z-index: 15;
+}
+.stem-pos-3:hover, .stem-pos-3.selected {
+  transform: translate(0px, -85px) rotate(0deg) scale(1.18);
+  z-index: 15;
+}
+.stem-pos-4:hover, .stem-pos-4.selected {
+  transform: translate(82px, -65px) rotate(10deg) scale(1.12);
+  z-index: 15;
+}
+.stem-pos-5:hover, .stem-pos-5.selected {
+  transform: translate(162px, -28px) rotate(24deg) scale(1.12);
+  z-index: 15;
+}
+.stem-pos-6:hover, .stem-pos-6.selected {
+  transform: translate(-92px, 32px) rotate(-12deg) scale(1.1);
+  z-index: 15;
+}
+.stem-pos-7:hover, .stem-pos-7.selected {
+  transform: translate(92px, 32px) rotate(12deg) scale(1.1);
+  z-index: 15;
+}
+
+/* Tallo verde floral con hojas */
+.stem-line {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 7px;
+  height: 195px;
+  background: linear-gradient(90deg, #2d6a4f, #52b788, #1b4332);
+  border-radius: 6px;
+  box-shadow: 0 0 8px rgba(82, 183, 136, 0.4);
+}
+
+.leaf {
+  position: absolute;
+  width: 24px;
+  height: 13px;
+  background: linear-gradient(135deg, #74c69d, #2d6a4f);
+  border-radius: 20px 0 20px 0;
+}
+
+.leaf-left {
+  left: -21px;
+  top: 65px;
+  transform: rotate(-25deg);
+}
+
+.leaf-right {
+  right: -21px;
+  top: 42px;
+  transform: scaleX(-1) rotate(-25deg);
+}
+
+/* Tarjeta estilo Blister / Corola Floral que sostiene el auto */
+.blister-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 112px;
+  height: 185px;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 182, 193, 0.12) 55%, rgba(255, 77, 141, 0.28) 100%);
+  border: 2px solid rgba(255, 224, 236, 0.75);
+  border-radius: 18px 18px 14px 14px;
+  backdrop-filter: blur(6px);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.45),
+    inset 0 0 15px rgba(255, 255, 255, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.blister-gold {
+  border-color: var(--gold-bright);
+  background: linear-gradient(165deg, rgba(255, 235, 153, 0.28) 0%, rgba(255, 183, 3, 0.18) 100%);
+  box-shadow:
+    0 10px 28px rgba(255, 190, 11, 0.35),
+    inset 0 0 18px rgba(255, 209, 102, 0.35);
+}
+
+.car-flower:hover .blister-card,
+.car-flower.selected .blister-card {
+  border-color: var(--gold-bright);
+  box-shadow:
+    0 12px 30px rgba(255, 77, 141, 0.65),
+    0 0 22px rgba(255, 209, 102, 0.55);
+}
+
+.blister-header {
+  width: 100%;
+  text-align: center;
+  font-size: 0.56rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #ffffff;
+  background: linear-gradient(90deg, #ff2a85, #7209b7);
+  padding: 3px 4px;
+  border-radius: 10px;
+  margin-bottom: 4px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.blister-gold .blister-header {
+  background: linear-gradient(90deg, #fb5607, #ffbe0b, #fb5607);
+  color: #1a0b24;
+  text-shadow: none;
+}
+
+.car-body-wrap {
+  position: relative;
+  width: 86px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.car-svg {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 3;
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.55));
+  transition: transform 0.25s ease;
+}
+
+.car-flower:hover .car-svg {
+  transform: scale(1.05);
+}
+
+/* Halo de pétalos detrás de cada auto para que parezca flor-auto */
+.flower-petal-ring {
+  position: absolute;
+  inset: -12px;
+  border-radius: 26px;
+  border: 2px dashed rgba(255, 182, 193, 0.45);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ==========================================
+   LUCES LED Y NEÓN DE LOS AUTOS
+   ========================================== */
+.headlight-beam {
+  position: absolute;
+  top: -55px;
+  width: 34px;
+  height: 75px;
+  background: linear-gradient(to top, rgba(255, 250, 205, 0.85) 0%, rgba(255, 255, 255, 0) 100%);
+  clip-path: polygon(35% 100%, 65% 100%, 100% 0%, 0% 0%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+  filter: blur(3px);
+  transition: opacity 0.35s ease;
+}
+
+.beam-left { left: 6px; transform: rotate(-6deg); }
+.beam-right { right: 6px; transform: rotate(6deg); }
+
+.underglow {
+  position: absolute;
+  inset: 10px 6px;
+  border-radius: 30px;
+  filter: blur(14px);
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 0.35s ease;
+}
+
+.glow-pink { background: #ff2a85; }
+.glow-red { background: #ff1744; }
+.glow-gold { background: #ffbe0b; }
+.glow-blue { background: #00f5d4; }
+.glow-purple { background: #b5179e; }
+.glow-mint { background: #2ec4b6; }
+
+/* Activar luces al hacer hover, al seleccionar o en Modo Nocturno */
+body.lights-on .headlight-beam,
+.car-flower:hover .headlight-beam,
+.car-flower.selected .headlight-beam {
+  opacity: 0.95;
+}
+
+body.lights-on .underglow,
+.car-flower:hover .underglow,
+.car-flower.selected .underglow {
+  opacity: 0.85;
+}
+
+body.lights-on .car-headlight,
+.car-flower:hover .car-headlight {
+  fill: #ffffff !important;
+  filter: drop-shadow(0 0 6px #fff3b0);
+}
+
+/* Rosas intermedias en la boca del envoltorio */
+.bouquet-roses-mid {
+  position: absolute;
+  bottom: 245px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1.4rem;
+  z-index: 8;
+  pointer-events: none;
+}
+
+.rose-bud {
+  font-size: 2.2rem;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.45));
+  animation: pulseRose 2.6s ease-in-out infinite alternate;
+}
+.rose-bud:nth-child(even) {
+  animation-delay: 0.8s;
+  transform: translateY(8px);
+}
+
+@keyframes pulseRose {
+  0% { transform: scale(0.95); }
+  100% { transform: scale(1.08); }
+}
+
+/* Cono Frontal del Envoltorio */
+.wrap-front-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 360px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.wrap-front-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 -8px 22px rgba(0, 0, 0, 0.45));
+}
+
+/* Etiqueta colgante interactiva "PARA LIZ - TQM" */
+.bouquet-tag {
+  position: absolute;
+  bottom: 68px;
+  left: 53%;
+  transform: rotate(10deg);
+  transform-origin: top center;
+  background: linear-gradient(135deg, #fffdf9 0%, #ffe5ec 100%);
+  color: #800f2f;
+  border: 2.5px solid var(--gold-bright);
+  border-radius: 12px;
+  padding: 0.55rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+  animation: tagSwing 3.5s ease-in-out infinite alternate;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bouquet-tag:hover {
+  animation-play-state: paused;
+  transform: rotate(0deg) scale(1.12);
+  box-shadow: 0 10px 26px rgba(255, 209, 102, 0.75);
+}
+
+@keyframes tagSwing {
+  0% { transform: rotate(7deg); }
+  100% { transform: rotate(16deg); }
+}
+
+.tag-hole {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #590d22;
+  border: 1.5px solid var(--gold-bright);
+  margin-bottom: 3px;
+}
+
+.tag-small {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #c9184a;
+}
+
+.tag-Big {
+  font-family: 'Righteous', cursive;
+  font-size: 1.15rem;
+  color: #590d22;
+}
+
+.tag-tqm {
+  font-size: 0.72rem;
+  font-weight: 800;
+  background: #ff2a85;
+  color: #ffffff;
+  padding: 1px 7px;
+  border-radius: 99px;
+  margin-top: 2px;
+}
+
+/* ==========================================
+   VELOCÍMETRO / MEDIDOR DE CARIÑO (FOOTER)
+   ========================================== */
+.rpm-footer {
+  margin-top: 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.speedometer-card {
+  background: var(--card-glass);
+  border: 1.5px solid rgba(255, 158, 187, 0.35);
+  border-radius: 16px;
+  padding: 0.85rem 1.4rem;
+  width: 100%;
+  max-width: 460px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+}
+
+.speedo-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--pink-soft);
+  margin-bottom: 0.45rem;
+}
+
+.speedo-bar-track {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 99px;
+  overflow: hidden;
+  padding: 2px;
+}
+
+.speedo-bar-fill {
+  height: 100%;
+  width: 92%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #00f5d4 0%, #ffbe0b 50%, #ff2a85 100%);
+  box-shadow: 0 0 12px rgba(255, 42, 133, 0.8);
+  animation: revGauge 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes revGauge {
+  0% { width: 86%; }
+  100% { width: 100%; }
+}
+
+.speedo-value {
+  margin-top: 0.4rem;
+  font-family: 'Righteous', sans-serif;
+  font-size: 0.95rem;
+  color: var(--gold-bright);
+  letter-spacing: 1px;
+}
+
+/* ==========================================
+   MODAL DE DEDICATORIA ESPECIAL PARA LIZ
+   ========================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 4, 16, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.2rem;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.love-card {
+  position: relative;
+  background: linear-gradient(145deg, #2b123a 0%, #160821 100%);
+  border: 2px solid var(--gold-bright);
+  border-radius: 24px;
+  max-width: 460px;
+  width: 100%;
+  padding: 2rem 1.8rem;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 35px rgba(255, 42, 133, 0.4);
+  transform: translateY(25px) scale(0.95);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-backdrop.open .love-card {
+  transform: translateY(0) scale(1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--pink-soft);
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.card-badge {
+  display: inline-block;
+  background: rgba(255, 209, 102, 0.15);
+  border: 1px solid var(--gold-bright);
+  color: var(--gold-bright);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.8rem;
+  border-radius: 99px;
+  margin-bottom: 0.8rem;
+}
+
+.card-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.6rem;
+  color: var(--gold-bright);
+  margin-bottom: 0.9rem;
+}
+
+.card-body {
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: #fce7f3;
+  margin-bottom: 0.9rem;
+}
+
+.card-signature {
+  font-family: 'Righteous', sans-serif;
+  color: var(--pink-soft);
+  font-size: 1.05rem;
+  margin: 1.1rem 0 1.3rem;
+}
+
+.modal-action-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ==========================================
+   RESPONSIVE PARA MÓVILES Y PANTALLAS PEQUEÑAS
+   ========================================== */
+@media (max-width: 640px) {
+  .bouquet-stage {
+    height: 520px;
+    margin-top: -15px;
+  }
+
+  .bouquet-wrapper {
+    transform: scale(0.76);
+    transform-origin: top center;
+  }
+
+  @keyframes bouquetSway {
+    0% { transform: scale(0.76) rotate(-1deg); }
+    100% { transform: scale(0.76) rotate(1deg); }
+  }
+
+  .bouquet-wrapper.turbo-shake {
+    animation: turboVibrateMobile 0.14s infinite alternate;
+  }
+
+  @keyframes turboVibrateMobile {
+    0% { transform: scale(0.78) translate(-2px, -2px) rotate(-1deg); }
+    100% { transform: scale(0.78) translate(2px, 2px) rotate(1deg); }
+  }
+}
+
+@media (max-width: 420px) {
+  .bouquet-stage {
+    height: 450px;
+  }
+
+  .bouquet-wrapper {
+    transform: scale(0.64);
+  }
+
+  @keyframes bouquetSway {
+    0% { transform: scale(0.64) rotate(-1deg); }
+    100% { transform: scale(0.64) rotate(1deg); }
+  }
+}
+
